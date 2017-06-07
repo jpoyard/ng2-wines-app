@@ -1,0 +1,29 @@
+<md-card class="wine-card">
+  <md-card-header>
+    <md-card-title>{{wine.name}}</md-card-title>
+    <md-card-subtitle>{{wine.region}} {{country}} {{wine.year}}</md-card-subtitle>
+  </md-card-header>
+  <md-card-content fxLayout="row" fxLayoutAlign="start center">
+    <div fxFlex="20">
+      <img src="{{imgSource}}">
+    </div>
+    <div fxLayout="column">
+      <p>
+        {{wine.description}}
+      </p>
+      <div fxLayout="column" fxLayoutWrap fxLayoutGap="10px">
+        <div>
+          <b>Rating:</b> {{wine.rating}}
+          <md-icon style="color: gold">star_rate</md-icon>
+        </div>
+        <div>
+          <b>Price:</b> {{wine.price | currency:'EUR':true}}
+        </div>
+      </div>
+    </div>
+  </md-card-content>
+  <md-card-actions>
+    <button md-mini-fab (click)="edit($event)"><md-icon>mode_edit</md-icon></button>
+    <button md-mini-fab (click)="remove($event)"><md-icon>delete</md-icon></button>
+  </md-card-actions>
+</md-card>

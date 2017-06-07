@@ -1,0 +1,18 @@
+<md-toolbar color="primary">
+  <div fxLayout="row" fxLayoutGap="10px">
+    <a md-mini-fab routerLink="home">
+      <md-icon>home</md-icon>
+    </a>
+    <a md-mini-fab routerLink="wines">
+      <md-icon>view_list</md-icon>
+    </a>
+  </div>
+
+  <!-- This fills the remaining space of the current row -->
+  <span class="fill-remaining-space"></span>
+
+  <span>Wines app</span>
+</md-toolbar>
+<div class="root-view">
+  <router-outlet></router-outlet>
+</div>

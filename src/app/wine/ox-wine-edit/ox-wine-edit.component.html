@@ -1,0 +1,36 @@
+<md-card class="wine-card">
+  <md-card-content fxLayout="row" fxLayoutAlign="start center">
+    <div fxFlex="20">
+      <img src="{{imgSource}}">
+    </div>
+    <div fxLayout="column" *ngIf="countries.length>0">
+      <form [formGroup]="wineForm" novalidate>
+        <md-input-container>
+          <input mdInput placeholder="Name" formControlName="name">
+        </md-input-container>
+
+        <md-input-container>
+          <input mdInput placeholder="Region" formControlName="region">
+        </md-input-container>
+
+        <md-input-container>
+          <input mdInput placeholder="Country" [mdAutocomplete]="country" formControlName="country">
+        </md-input-container>
+
+        <md-autocomplete #country="mdAutocomplete" [displayWith]="displayCountry">
+          <md-option *ngFor="let country of filteredCountries | async" [value]="country">
+            {{ country.en }}
+          </md-option>
+        </md-autocomplete>
+
+        <md-input-container>
+          <textarea mdInput placeholder="Description" formControlName="description"></textarea>
+        </md-input-container>
+      </form>
+    </div>
+  </md-card-content>
+  <md-card-actions>
+    <button md-mini-fab (click)="cancel($event)"><md-icon>arrow_back</md-icon></button>
+    <button md-mini-fab (click)="update($event)"><md-icon>check</md-icon></button>
+  </md-card-actions>
+</md-card>

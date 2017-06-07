@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        .container {
+            margin: 0 auto;
+            display: block;
+            width: 100px;
+        }
+
+        #counterView {
+            text-align: center;
+            font-size: 25px;
+            background: black;
+            color: white;
+            font-stretch: extra-condensed;
+            border-radius: 10px;
+            margin: 10px;
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <script type="text/javascript" src="https://wzrd.in/standalone/expect@latest"></script>
+    <script type="text/javascript" src="https://wzrd.in/standalone/deep-freeze@latest"></script>
+
+    <div class="container">
+        <div id="counterView"></div>
+        <button style="width: 48%;" onclick="store.dispatch({type: 'DECREMENT'})">-</button>
+        <button style="width: 48%;" onclick="store.dispatch({type: 'INCREMENT'})">+</button>
+    </div>
+
+    <script type="text/javascript" src="../redux.js"></script>
+    <script type="text/javascript" src="./index.js"></script>
+    <script type="text/javascript" src="./index.spec.js"></script>
+</body>
+
+</html>

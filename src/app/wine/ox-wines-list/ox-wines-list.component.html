@@ -1,0 +1,26 @@
+<div fxLayout="row" fxLayout.xs="column">
+  <md-card>
+    <form>
+      <md-input-container>
+        <input mdInput placeholder="Filter" [(ngModel)]="filter" name="filter">
+      </md-input-container>
+      <md-select placeholder="Sorting" [(ngModel)]="sorting" name="sorting">
+        <md-option i18n>none</md-option>
+        <md-option value="name:1" i18n>Sort by name</md-option>
+        <md-option value="year:1" i18n>Sort by year</md-option>
+        <md-option value="year:-1" i18n>Sort by year reverse</md-option>
+        <md-option value="price:1" i18n>Sort by price</md-option>
+        <md-option value="price:-1" i18n>Sort by price reverse</md-option>
+        <md-option value="rating:1" i18n>Sort by rating</md-option>
+        <md-option value="rating:-1" i18n>Sort by rating reverse</md-option>
+        <md-option value="goodDealRatio:-1" i18n>Good deal ratio</md-option>
+      </md-select>
+    </form>
+    <md-list>
+      <app-ox-wine-item *ngFor="let wine of wines" [wine]="wine" [imgSource]="getImgSource(wine)" [active]="isActive(wine)"></app-ox-wine-item>
+    </md-list>
+  </md-card>
+  <div class="wine-view">
+    <router-outlet></router-outlet>
+  </div>
+</div>

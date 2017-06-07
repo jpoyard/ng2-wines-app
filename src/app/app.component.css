@@ -1,0 +1,8 @@
+md-toolbar .fill-remaining-space {
+  flex: 1 1 auto;
+}
+
+.root-view {
+  display: block;
+  margin: 20px;
+}

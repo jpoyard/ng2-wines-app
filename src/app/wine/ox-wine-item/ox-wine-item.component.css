@@ -1,0 +1,15 @@
+
+md-list-item {
+    border: solid 2px transparent;
+    border-radius: 5px;
+}
+
+md-list-item.active {
+    background: #3f51b5;
+    color: rgba(255,255,255,.87);
+}
+
+md-list-item:hover {
+    background: #ff4081;
+    color: rgba(255,255,255,.87);
+}

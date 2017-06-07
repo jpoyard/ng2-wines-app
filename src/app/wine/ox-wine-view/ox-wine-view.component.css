@@ -1,0 +1,13 @@
+.wine-card {
+    width: 400px;
+    max-width: 100%;
+}
+.wine-card img {
+    width: 75%;
+    max-width: 50px;
+}
+
+.wine-card .mat-card-header-text, .wine-card img  {
+    display: block;
+    margin: 0 auto;
+}
