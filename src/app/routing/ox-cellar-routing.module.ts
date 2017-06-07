@@ -1,3 +1,4 @@
+import { CountriesResolver } from '../country/countries-resolver';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
@@ -16,8 +17,14 @@ const appRoutes: Routes = [
   {
     path: 'wines', component: OxWinesListComponent,
     children: [
-      { path: ':id/view', component: OxWineViewComponent, resolve: { wine: WineResolver } },
-      { path: ':id/edit', component: OxWineEditComponent, resolve: { wine: WineResolver } }
+      {
+        path: ':id/view', component: OxWineViewComponent,
+        resolve: { wine: WineResolver }
+      },
+      {
+        path: ':id/edit', component: OxWineEditComponent,
+        resolve: { wine: WineResolver, countries: CountriesResolver }
+      }
     ]
   },
   {

@@ -1,3 +1,4 @@
+import { CountriesResolver } from './country/countries-resolver';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -5,7 +6,6 @@ import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Logger, Options as LoggerOptions, Level as LoggerLevel } from 'angular2-logger/core';
 
 import { RouterModule, Router } from '@angular/router';
 
@@ -24,6 +24,11 @@ import { OxWineItemComponent } from './wine/ox-wine-item/ox-wine-item.component'
 import { WineResolver } from './wine/wine-resolver';
 import { ImgWineResolver } from './wine/img-wine-resolver';
 import { OxLoadingComponent } from './ox-loading/ox-loading.component';
+import { WinesEpics } from './wine/wines.epics';
+import { WinesActions } from './wine/wines.actions';
+
+// This app's ngModules
+import { StoreModule } from './store/store.module';
 
 @NgModule({
   declarations: [
@@ -45,19 +50,21 @@ import { OxLoadingComponent } from './ox-loading/ox-loading.component';
     FlexLayoutModule,
     OxCellarRoutingModule,
     RouterModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    StoreModule
   ],
   providers: [
     WineResolver,
+    CountriesResolver,
     ImgWineResolver,
     OxCellarApiService,
     OxCountriesService,
-    Logger,
-    { provide: LoggerOptions, useValue: { level: LoggerLevel.LOG } }
+    WinesEpics,
+    WinesActions
   ],
   bootstrap: [AppComponent],
   entryComponents: [OxLoadingComponent]
 })
 export class AppModule {
-  constructor() {}
+  constructor() { }
 }

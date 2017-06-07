@@ -1,10 +1,10 @@
 <div fxLayout="row" fxLayout.xs="column">
   <md-card>
-    <form>
+    <form [formGroup]="queryForm" novalidate>
       <md-input-container>
-        <input mdInput placeholder="Filter" [(ngModel)]="filter" name="filter">
+        <input mdInput placeholder="Filter" formControlName="filter">
       </md-input-container>
-      <md-select placeholder="Sorting" [(ngModel)]="sorting" name="sorting">
+      <md-select placeholder="Sorting" formControlName="sorting">
         <md-option i18n>none</md-option>
         <md-option value="name:1" i18n>Sort by name</md-option>
         <md-option value="year:1" i18n>Sort by year</md-option>
@@ -16,9 +16,15 @@
         <md-option value="goodDealRatio:-1" i18n>Good deal ratio</md-option>
       </md-select>
     </form>
-    <md-list>
-      <app-ox-wine-item *ngFor="let wine of wines" [wine]="wine" [imgSource]="getImgSource(wine)" [active]="isActive(wine)"></app-ox-wine-item>
+
+    <md-list *ngIf="loading$ !== true">
+      <app-ox-wine-item *ngFor="let wine of wines$ | async" [wine]="wine"></app-ox-wine-item>
     </md-list>
+
+    <div *ngIf="error$ | async">
+      <span>An error occurs : {{error$ | async | json}}</span>
+    </div>
+
   </md-card>
   <div class="wine-view">
     <router-outlet></router-outlet>

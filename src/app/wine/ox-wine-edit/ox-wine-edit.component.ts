@@ -2,7 +2,6 @@ import { MdAutocompleteModule } from '@angular/material';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Logger } from 'angular2-logger/core';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/map';
 
@@ -12,6 +11,9 @@ import { Wine } from '../wine';
 import { OxCountriesService } from '../../country/ox-countries.service';
 import { Country } from '../../country/country';
 
+import { NgRedux } from '@angular-redux/store';
+import { IAppState } from '../../store/root.types';
+import { WinesActions } from '../wines.actions';
 
 @Component({
   selector: 'app-ox-wine-edit',
@@ -23,31 +25,27 @@ export class OxWineEditComponent implements OnInit {
   filteredCountries: any;
   private wine: Wine;
   private country: Country;
-  private countries = new Array<Country>();
+  private countries: Array<Country>;
 
   constructor(
-    private logger: Logger,
     private router: Router,
     private route: ActivatedRoute,
     private oxCellarApiService: OxCellarApiService,
     private OxCountriesService: OxCountriesService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private ngRedux: NgRedux<IAppState>,
+    private actions: WinesActions
   ) { }
 
   ngOnInit() {
     this.route.data.subscribe(data => {
       this.wine = data.wine;
-      this.logger.info(this.wine);
-      this.OxCountriesService.getAll().then(
-        countries => {
-          this.countries = countries;
-          this.country = this.countries.find(country => country.code === this.wine.country);
-          this.logger.info(this.country);
-          this.createForm();
-        }
-      );
+      this.countries = data.countries;
+      this.country = this.countries.find(country => country.code === this.wine.country);
+      this.createForm();
+      // TODO - 1 - select Wine - selectWineSucceeded
+      // this.ngRedux.dispatch(XXX);
     });
-
   }
 
   createForm() {
@@ -95,8 +93,7 @@ export class OxWineEditComponent implements OnInit {
     this.wine.price = this.wineForm.value.price;
     this.wine.year = this.wineForm.value.year;
 
-    this.oxCellarApiService.update(this.wine).then(
-      (resolve) => this.router.navigate([this.wine.id, 'view'], { relativeTo: this.route.parent })
-    );
+    // TODO - 3 - update Wine
+    // this.ngRedux.dispatch(XXX);
   }
 }

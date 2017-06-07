@@ -1,14 +1,17 @@
-import { Router, ActivatedRoute } from '@angular/router';
+import { OxCellarRoutingModule } from '../../routing/ox-cellar-routing.module';
+import { ActivatedRoute } from '@angular/router';
 import { InputDecorator } from '@angular/core/src/metadata/directives';
 import { Component, OnInit } from '@angular/core';
-import { Logger } from 'angular2-logger/core';
 import { ElementRef, HostListener, EventEmitter, Input, Output } from '@angular/core';
 
 import { OxCellarApiService } from '../ox-cellar-api.service';
 import { Wine } from '../wine';
 
-import { OxCountriesService } from '../../country/ox-countries.service';
-import { Country } from '../../country/country';
+import { Observable } from 'rxjs/Rx';
+import { select } from '@angular-redux/store';
+import { NgRedux } from '@angular-redux/store';
+import { IAppState } from '../../store/root.types';
+import { WinesActions } from '../wines.actions';
 
 @Component({
   selector: 'app-ox-wine-item',
@@ -17,31 +20,30 @@ import { Country } from '../../country/country';
 })
 export class OxWineItemComponent implements OnInit {
   @Input() wine: Wine;
-  @Input() imgSource: string;
-  @Input() active: false;
-  private _country: Country;
+  // TODO - 1 - selected
+  // @select(['XXX', 'XXX']) readonly selected$: Observable<Wine>;
+
+  private active: boolean;
+  private imgSource: string;
 
   constructor(
-    private logger: Logger,
     private el: ElementRef,
-    private router: Router,
     private route: ActivatedRoute,
-    private OxCountriesService: OxCountriesService
+    private oxCellarApiService: OxCellarApiService,
+    private ngRedux: NgRedux<IAppState>,
+    private actions: WinesActions
   ) { }
 
   ngOnInit() {
-    this.OxCountriesService.get(this.wine.country).then(
-      country => this._country = country
-    );
+    this.active = false;
+    this.imgSource = this.oxCellarApiService.getImageSourceUrl(this.wine.id);
+    // TODO - 1 - this.selected$.subscribe( XXX => XXX)
   }
 
-  get country() {
-    return this._country ? this._country.en : undefined;
-  }
-
-  open(event) {
+  select(event) {
     event.preventDefault();
-    this.router.navigate([this.wine.id, 'view'], { relativeTo: this.route });
+    // TODO - 1 - select Wine - selectWineSucceeded
+    // this.ngRedux.dispatch(XXX);
   }
 
   @HostListener('mouseenter') onMouseEnter() {

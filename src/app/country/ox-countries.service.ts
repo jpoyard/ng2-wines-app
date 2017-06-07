@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Http, RequestOptionsArgs } from '@angular/http';
-import { Logger } from 'angular2-logger/core';
 import { Country } from './country';
 
 const PARAM_QUERY = 'q';
@@ -10,8 +9,7 @@ export class OxCountriesService {
   private countriesUrl = 'api/countries';
 
   constructor(
-    private http: Http,
-    private logger: Logger
+    private http: Http
   ) {
   }
 
@@ -25,7 +23,6 @@ export class OxCountriesService {
     const params = {};
     if (lang && query) {
       params[PARAM_QUERY] = lang + ':' + query;
-      this.logger.log(`CountryManagerServiceImpl : start search for query : q=${params[PARAM_QUERY]}`);
     }
 
     return this.http.get(this.countriesUrl, { params: params })

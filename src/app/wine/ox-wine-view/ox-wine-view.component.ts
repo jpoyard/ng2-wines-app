@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Logger } from 'angular2-logger/core';
 
 import { OxCellarApiService } from '../ox-cellar-api.service';
 import { Wine } from '../wine';
 
 import { OxCountriesService } from '../../country/ox-countries.service';
 import { Country } from '../../country/country';
+
+import { NgRedux } from '@angular-redux/store';
+import { IAppState } from '../../store/root.types';
+import { WinesActions } from '../wines.actions';
 
 @Component({
   selector: 'app-ox-wine-view',
@@ -18,11 +21,12 @@ export class OxWineViewComponent implements OnInit {
   private _country: Country;
 
   constructor(
-    private logger: Logger,
     private router: Router,
     private route: ActivatedRoute,
     private oxCellarApiService: OxCellarApiService,
-    private OxCountriesService: OxCountriesService
+    private OxCountriesService: OxCountriesService,
+    private ngRedux: NgRedux<IAppState>,
+    private actions: WinesActions
   ) { }
 
   ngOnInit() {
@@ -31,6 +35,8 @@ export class OxWineViewComponent implements OnInit {
       this.OxCountriesService.get(this.wine.country).then(
         resolve => this._country = resolve
       );
+      // TODO - 1 - select Wine - selectWineSucceeded
+      // this.ngRedux.dispatch(XXX);
     });
   }
 
@@ -49,8 +55,7 @@ export class OxWineViewComponent implements OnInit {
 
   remove(event) {
     event.preventDefault();
-    this.oxCellarApiService.delete(this.wine).then(
-      (resolve) => this.router.navigate(['wines'])
-    );
+    // TODO - 2 - delete Wine
+    // this.ngRedux.dispatch(XXX);
   }
 }

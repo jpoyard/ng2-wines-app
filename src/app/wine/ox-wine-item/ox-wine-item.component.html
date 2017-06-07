@@ -1,9 +1,9 @@
-<md-list-item (click)="open($event)" [ngClass]="{'active': active}">
+<md-list-item (click)="select($event)" [ngClass]="{'active': active}">
   <md-icon md-list-icon>
     <img src="{{imgSource}}" height="24" width="auto" class="md-wine" alt="{{ wine.name }}" />
   </md-icon>
   <h3 md-line> {{wine.name}} {{wine.year}}</h3>
   <p md-line>
-    <span> <i>{{wine.region}}</i> <b>{{country}}</b> </span>
+    <span> <i>{{wine.region}}</i> <b>{{wine.country}}</b> </span>
   </p>
 </md-list-item>
