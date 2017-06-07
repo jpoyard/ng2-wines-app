@@ -1,4 +1,3 @@
-import { CountriesResolver } from './country/countries-resolver';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -22,6 +21,7 @@ import { OxWineEditComponent } from './wine/ox-wine-edit/ox-wine-edit.component'
 import { OxPageNotFoundComponent } from './ox-page-not-found/ox-page-not-found.component';
 import { OxWineItemComponent } from './wine/ox-wine-item/ox-wine-item.component';
 import { WineResolver } from './wine/wine-resolver';
+import { CountriesResolver } from './country/countries-resolver';
 import { ImgWineResolver } from './wine/img-wine-resolver';
 import { OxLoadingComponent } from './ox-loading/ox-loading.component';
 import { WinesEpics } from './wine/wines.epics';

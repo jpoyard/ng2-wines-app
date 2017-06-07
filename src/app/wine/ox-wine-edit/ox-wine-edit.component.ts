@@ -43,8 +43,8 @@ export class OxWineEditComponent implements OnInit {
       this.countries = data.countries;
       this.country = this.countries.find(country => country.code === this.wine.country);
       this.createForm();
-      // TODO - 1 - select Wine - selectWineSucceeded
-      // this.ngRedux.dispatch(XXX);
+
+      this.ngRedux.dispatch(this.actions.selectWineSucceeded(this.wine));
     });
   }
 
@@ -93,7 +93,6 @@ export class OxWineEditComponent implements OnInit {
     this.wine.price = this.wineForm.value.price;
     this.wine.year = this.wineForm.value.year;
 
-    // TODO - 3 - update Wine
-    // this.ngRedux.dispatch(XXX);
+    this.ngRedux.dispatch(this.actions.updateWine(this.route, this.wine));
   }
 }

@@ -3,7 +3,7 @@
     <div fxFlex="20">
       <img src="{{imgSource}}">
     </div>
-    <div fxLayout="column" *ngIf="wineForm">
+    <div fxLayout="column" *ngIf="countries.length>0">
       <form [formGroup]="wineForm" novalidate>
         <md-input-container>
           <input mdInput placeholder="Name" formControlName="name">

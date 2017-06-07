@@ -22,12 +22,9 @@ export class WinesEpics {
     public createEpics(): EpicMiddleware<any, any>[] {
         return [
             createEpicMiddleware(this.createLoadWineEpic()),
-            // TODO - 1 - select Wine
-            //     createEpicMiddleware(this.createSelectWineEpic()),
-            // TODO - 2 - delete Wine
-            //     createEpicMiddleware(this.createDeleteWineEpic()),
-            // TODO - 3 - update Wine
-            //     createEpicMiddleware(this.createUpdateWineEpic())
+            createEpicMiddleware(this.createSelectWineEpic()),
+            createEpicMiddleware(this.createDeleteWineEpic()),
+            createEpicMiddleware(this.createUpdateWineEpic())
         ];
     }
 
@@ -42,32 +39,42 @@ export class WinesEpics {
                     }))));
     }
 
-    // TODO - 1 - select Wine
-    /*
     private createSelectWineEpic() {
         return (action$: ActionsObservable<any>) =>
             action$
                 .ofType(WinesActions.SELECT_WINE_STARTED)
-                .XXX;
+                .switchMap(a =>
+                    Observable.fromPromise(
+                        this.router.navigate([a.payload.selected.id, 'view'], { relativeTo: a.meta.route })
+                    ).map(data => this.actions.selectWineSucceeded(a.payload.selected))
+                );
     }
-    */
 
-    // TODO - 2 - delete Wine
-    /*
     private createDeleteWineEpic() {
         return (action$: ActionsObservable<any>) =>
             action$
                 .ofType(WinesActions.DELETE_WINE_STARTED)
-                .XXX;
+                .switchMap(a => this.service.delete(a.payload.selected)
+                    .map(data => {
+                        this.router.navigate(['wines']);
+                        return this.actions.deleteWineSucceeded(a.payload.selected);
+                    })
+                    .catch(response => of(this.actions.loadFailed({
+                        status: '' + response.status,
+                    }))));
     }
-    */
 
-    /*
     private createUpdateWineEpic() {
         return (action$: ActionsObservable<any>) =>
             action$
                 .ofType(WinesActions.UPDATE_WINE_STARTED)
-                .XXX;
+                .switchMap(a => this.service.update(a.payload.selected)
+                    .map(data => {
+                        this.router.navigate(['wines', a.payload.selected.id, 'view']);
+                        return this.actions.updateWineSucceeded(a.payload.selected);
+                    })
+                    .catch(response => of(this.actions.loadFailed({
+                        status: '' + response.status,
+                    }))));
     }
-    */
 }

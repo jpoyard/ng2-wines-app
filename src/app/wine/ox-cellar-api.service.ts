@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, RequestOptionsArgs } from '@angular/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import 'rxjs/add/operator/toPromise';
 import { Observable } from 'rxjs/Observable';
 
 import { Wine } from './wine';
@@ -22,6 +21,8 @@ export class WinesQueryResponse {
 @Injectable()
 export class OxCellarApiService {
   private winesUrl = 'api/wines';
+  public updated$: BehaviorSubject<Wine> = new BehaviorSubject<Wine>(null);
+  public created$: BehaviorSubject<Wine> = new BehaviorSubject<Wine>(null);
 
   constructor(
     private http: Http
@@ -68,17 +69,17 @@ export class OxCellarApiService {
 
   public get(wineId: number): Observable<Wine> {
     return this.http.get(`${this.winesUrl}/${wineId}`)
-      .map(response => response.json() as Wine);
+      .map(resp => resp.json() as Wine);
   };
 
   public update(wine: Wine): Observable<Wine> {
     return this.http.put(`${this.winesUrl}/${wine.id}`, wine)
-      .map(response => response.json() as Wine);
+      .map(resp => resp.json() as Wine);
   };
 
   public save(wine: Wine): Observable<Wine> {
     return this.http.post(this.winesUrl, wine)
-      .map(response => response.json() as Wine);
+      .map(resp => resp.json() as Wine);
   };
 
   public delete(wine: Wine): Observable<Wine> {

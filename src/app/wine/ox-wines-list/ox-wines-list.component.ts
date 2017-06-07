@@ -79,5 +79,4 @@ export class OxWinesListComponent implements OnInit {
     const filters = filter ? [`name:${filter}`] : [];
     this.ngRedux.dispatch(this.actions.loadWines(filters, sorting));
   }
-
 }

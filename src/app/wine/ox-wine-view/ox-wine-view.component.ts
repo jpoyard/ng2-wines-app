@@ -35,8 +35,7 @@ export class OxWineViewComponent implements OnInit {
       this.OxCountriesService.get(this.wine.country).then(
         resolve => this._country = resolve
       );
-      // TODO - 1 - select Wine - selectWineSucceeded
-      // this.ngRedux.dispatch(XXX);
+      this.ngRedux.dispatch(this.actions.selectWineSucceeded(this.wine));
     });
   }
 
@@ -55,7 +54,6 @@ export class OxWineViewComponent implements OnInit {
 
   remove(event) {
     event.preventDefault();
-    // TODO - 2 - delete Wine
-    // this.ngRedux.dispatch(XXX);
+    this.ngRedux.dispatch(this.actions.deleteWine(this.route, this.wine));
   }
 }

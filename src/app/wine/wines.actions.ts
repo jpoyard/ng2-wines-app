@@ -1,4 +1,3 @@
-import { select } from '@angular-redux/store/lib/src/decorators/select';
 import { Injectable } from '@angular/core';
 import { Action } from 'redux';
 import { ActivatedRoute } from '@angular/router';
@@ -17,7 +16,7 @@ export class WinesActions {
   static readonly UPDATE_WINE_STARTED = 'UPDATE_WINE_STARTED';
   static readonly UPDATE_WINE_SUCCEEDED = 'UPDATE_WINE_SUCCEEDED';
 
-  static readonly WINES_LOAD_FAILED = 'WINES_LOAD_FAILED';
+  static readonly LOAD_FAILED = 'LOAD_FAILED';
 
   loadWines(filters: Array<string>, sorting: string): any {
     return {
@@ -41,22 +40,75 @@ export class WinesActions {
 
   loadFailed(error): any {
     return {
-      type: WinesActions.WINES_LOAD_FAILED,
+      type: WinesActions.LOAD_FAILED,
       meta: {},
+      payload: {},
       error,
     };
   }
 
-  // TODO - 1 - select Wine - selectWine(route: ActivatedRoute, wine: Wine): any
+  selectWine(route: ActivatedRoute, wine: Wine): any {
+    return {
+      type: WinesActions.SELECT_WINE_STARTED,
+      meta: {
+        route: route,
+      },
+      payload: {
+        selected: wine
+      }
+    };
+  }
 
-  // TODO - 1 - select Wine - selectWineSucceeded(wine: Wine): any
+  selectWineSucceeded(wine: Wine): any {
+    return {
+      type: WinesActions.SELECT_WINE_SUCCEEDED,
+      meta: {},
+      payload: {
+        selected: wine
+      }
+    };
+  }
 
-  // TODO - 2 - delete Wine - deleteWine(route: ActivatedRoute, wine: Wine): any
+  deleteWine(route: ActivatedRoute, wine: Wine): any {
+    return {
+      type: WinesActions.DELETE_WINE_STARTED,
+      meta: {
+        route: route,
+      },
+      payload: {
+        selected: wine
+      }
+    };
+  }
 
-  // TODO - 2 - delete Wine - deleteWineSucceeded(wine: Wine): any
+  deleteWineSucceeded(wine: Wine): any {
+    return {
+      type: WinesActions.DELETE_WINE_SUCCEEDED,
+      meta: {},
+      payload: {
+        selected: wine
+      }
+    };
+  }
+  updateWine(route: ActivatedRoute, wine: Wine): any {
+    return {
+      type: WinesActions.UPDATE_WINE_STARTED,
+      meta: {
+        route: route
+      },
+      payload: {
+        selected: wine
+      }
+    };
+  }
 
-  // TODO - 3 - update Wine - updateWine(route: ActivatedRoute, wine: Wine)
-
-  // TODO - 3 - update Wine - updateWineSucceeded(wine: Wine): any
-
+  updateWineSucceeded(wine: Wine): any {
+    return {
+      type: WinesActions.UPDATE_WINE_SUCCEEDED,
+      meta: {},
+      payload: {
+        selected: wine
+      }
+    };
+  }
 }

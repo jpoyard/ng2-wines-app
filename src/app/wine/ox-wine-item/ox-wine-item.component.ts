@@ -7,6 +7,9 @@ import { ElementRef, HostListener, EventEmitter, Input, Output } from '@angular/
 import { OxCellarApiService } from '../ox-cellar-api.service';
 import { Wine } from '../wine';
 
+import { OxCountriesService } from '../../country/ox-countries.service';
+import { Country } from '../../country/country';
+
 import { Observable } from 'rxjs/Rx';
 import { select } from '@angular-redux/store';
 import { NgRedux } from '@angular-redux/store';
@@ -20,15 +23,16 @@ import { WinesActions } from '../wines.actions';
 })
 export class OxWineItemComponent implements OnInit {
   @Input() wine: Wine;
-  // TODO - 1 - selected
-  // @select(['XXX', 'XXX']) readonly selected$: Observable<Wine>;
+  @select(['wines', 'selected']) readonly selected$: Observable<Wine>;
 
   private active: boolean;
   private imgSource: string;
+  private country: Country;
 
   constructor(
     private el: ElementRef,
     private route: ActivatedRoute,
+    private oxCountriesService: OxCountriesService,
     private oxCellarApiService: OxCellarApiService,
     private ngRedux: NgRedux<IAppState>,
     private actions: WinesActions
@@ -36,14 +40,20 @@ export class OxWineItemComponent implements OnInit {
 
   ngOnInit() {
     this.active = false;
+    this.oxCountriesService.get(this.wine.country).then(
+      country => this.country = country
+    );
     this.imgSource = this.oxCellarApiService.getImageSourceUrl(this.wine.id);
-    // TODO - 1 - this.selected$.subscribe( XXX => XXX)
+    this.selected$.subscribe(value => this.active = (value === this.wine));
+  }
+
+  get countryLabel() {
+    return this.country ? this.country.en : undefined;
   }
 
   select(event) {
     event.preventDefault();
-    // TODO - 1 - select Wine - selectWineSucceeded
-    // this.ngRedux.dispatch(XXX);
+    this.ngRedux.dispatch(this.actions.selectWine(this.route, this.wine));
   }
 
   @HostListener('mouseenter') onMouseEnter() {
